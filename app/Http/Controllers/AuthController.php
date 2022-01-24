@@ -24,26 +24,27 @@ class AuthController extends Controller
      */
     public function signin(Request $request)
     {
-        if(auth()->attempt($request->only('email','password')));{
-        return redirect('/dashboard');
+        if (auth()->attempt($request->only('email', 'password'))) {
+            return redirect('/dashboard');
+        }
+        return redirect('/login');
     }
-          return redirect('/login');   
-}
-    public function register(){
+    public function register()
+    {
         return view('register');
     }
-        public function signup(Request $request)
-        {
-            User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => bcrypt($request->password)
-            ]);
-            return redirect('/login');
-        }
-        public function logout()
-        {
-            auth()->logout();
-            return redirect('/login');
-        }
+    public function signup(Request $request)
+    {
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password)
+        ]);
+        return redirect('/login');
     }
+    public function logout()
+    {
+        auth()->logout();
+        return redirect('/login');
+    }
+}
